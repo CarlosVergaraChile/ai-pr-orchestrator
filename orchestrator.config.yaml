@@ -1,0 +1,163 @@
+# Multi-AI PR Orchestrator Configuration
+# Integrates multiple AI providers for intelligent project automation
+
+orchestrator:
+  version: "1.0.0"
+  name: "Multi-AI Project Orchestrator"
+  description: "Automatic PR creation and review system using multiple AI APIs"
+
+ai_providers:
+  chatgpt:
+    name: "OpenAI ChatGPT"
+    type: "chat_completion"
+    endpoint: "https://api.openai.com/v1/chat/completions"
+    model: "gpt-4-turbo"
+    enabled: true
+    priority: 1
+    api_key_env: "CHATGPT_API_KEY"
+    capabilities:
+      - code_review
+      - branch_planning
+      - commit_messages
+      - test_generation
+
+  deepseek:
+    name: "DeepSeek"
+    type: "chat_completion"
+    endpoint: "https://api.deepseek.com/v1/chat/completions"
+    model: "deepseek-coder"
+    enabled: true
+    priority: 2
+    api_key_env: "DEEPSEEK_API_KEY"
+    capabilities:
+      - code_generation
+      - refactoring_suggestions
+      - performance_analysis
+      - security_audit
+
+  claude:
+    name: "Anthropic Claude"
+    type: "chat_completion"
+    endpoint: "https://api.anthropic.com/v1/messages"
+    model: "claude-3-opus"
+    enabled: true
+    priority: 3
+    api_key_env: "CLAUDE_API_KEY"
+    capabilities:
+      - documentation
+      - architecture_review
+      - technical_analysis
+      - best_practices
+
+  gemini:
+    name: "Google Gemini"
+    type: "chat_completion"
+    endpoint: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    model: "gemini-2.0-flash"
+    enabled: true
+    priority: 4
+    api_key_env: "GEMINI_API_KEY"
+    capabilities:
+      - multimodal_analysis
+      - workflow_optimization
+      - testing_strategy
+
+  mistral:
+    name: "Mistral AI"
+    type: "chat_completion"
+    endpoint: "https://api.mistral.ai/v1/chat/completions"
+    model: "mistral-large"
+    enabled: true
+    priority: 5
+    api_key_env: "MISTRAL_API_KEY"
+    capabilities:
+      - rapid_coding
+      - quick_reviews
+      - debugging_assistance
+
+  grok:
+    name: "xAI Grok"
+    type: "chat_completion"
+    endpoint: "https://api.x.ai/v1/chat/completions"
+    model: "grok-2"
+    enabled: true
+    priority: 6
+    api_key_env: "GROK_API_KEY"
+    capabilities:
+      - real_time_analysis
+      - trend_analysis
+      - contextual_improvements
+
+workflow:
+  auto_branch_creation:
+    enabled: true
+    prefix: "ai-"
+    naming_convention: "ai-{date}-{provider}-{feature}"
+
+  auto_pr_creation:
+    enabled: true
+    request_review_from: ["chatgpt", "deepseek", "claude"]
+    min_required_reviews: 2
+    assign_labels: ["ai-generated", "needs-review"]
+
+  pr_analysis_triggers:
+    - on_pr_created
+    - on_pr_updated
+    - on_code_push
+
+  commit_analysis:
+    enabled: true
+    analyze_files_changed: true
+    suggest_improvements: true
+
+  notification:
+    enabled: true
+    channels:
+      - github_comments
+      - slack
+      - email
+
+project_mapping:
+  # Maps project names to AI provider strategies
+  default_strategy: "balanced"
+  
+  strategies:
+    balanced:
+      providers: ["chatgpt", "deepseek", "claude"]
+      distribution: "round_robin"
+      
+    performance_focused:
+      providers: ["deepseek", "mistral", "grok"]
+      distribution: "sequential"
+      
+    quality_focused:
+      providers: ["claude", "chatgpt", "gemini"]
+      distribution: "parallel"
+
+rate_limits:
+  global:
+    requests_per_minute: 100
+  per_provider:
+    chatgpt:
+      requests_per_minute: 20
+    deepseek:
+      requests_per_minute: 30
+    claude:
+      requests_per_minute: 15
+    gemini:
+      requests_per_minute: 25
+    mistral:
+      requests_per_minute: 20
+    grok:
+      requests_per_minute: 20
+
+logging:
+  level: "INFO"
+  format: "json"
+  output:
+    - console
+    - file: "orchestrator.log"
+  metrics:
+    enabled: true
+    track_provider_performance: true
+    track_response_times: true
