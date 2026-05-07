@@ -1,0 +1,8 @@
+* @CarlosVergaraChile
+
+# Specific ownership
+/src/ai/* @CarlosVergaraChile
+/src/orchestrator/* @CarlosVergaraChile
+/src/pr/* @CarlosVergaraChile
+/src/models/* @CarlosVergaraChile
+/tests/* @CarlosVergaraChile
