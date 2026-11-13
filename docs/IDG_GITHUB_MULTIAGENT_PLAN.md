@@ -71,3 +71,17 @@ No usar el repositorio público `coipo-orchestrator` como archivo de contactos, 
 - https://github.com/anthropics/claude-code-action
 - https://github.com/google-github-actions/run-gemini-cli
 - https://open.manus.ai/docs/v2/introduction
+
+## Decisión de dirección: n8n primero, Zapier como complemento
+
+El titular informa que ya dispone de cuentas n8n y Zapier asociadas al correo de referencia de sus herramientas, y otras cuentas adicionales. **No se han verificado instancias, URLs, planes, credenciales, permisos, webhooks ni flujos activos**. Compartir dirección de correo no otorga autorización ni conexión automática entre plataformas.
+
+**Motor preferido: n8n existente**, si es accesible y permite webhooks seguros, autenticación y gestión de credenciales. GitHub sigue siendo registro central de Issue/PR/archivos y no se crea otro centro de mando. 
+
+Flujo objetivo: Issue autorizado GitHub → evento n8n → comprobación allowlist de repositorio, autor y etiqueta → seleccionar proveedor IA configurado → ejecutar con contexto mínimo → guardar resultado en rama/PR o Issue → revisión humana. Para investigación sensible, operar solamente en repositorios privados.
+
+Zapier queda para automatizaciones sencillas (avisos, calendarios, correo autorizado) si aportan valor, evitando duplicación de flujos con n8n. No programar envíos comerciales autónomos ni despliegues productivos.
+
+**Verificación necesaria antes de activar:** encontrar la instancia n8n y su propietario, confirmar modo cloud/self-hosted, URL, versionado, límites de costos, GitHub App/token de alcance mínimo, gestor de secretos y workflow existente. Revisar cuentas secundarias **una por una** con autorización explícita. No copiar credenciales a Drive o a GitHub.
+
+**Primera prueba sugerida:** crear un Issue sintético en repositorio privado, n8n recibe evento y deja un comentario/PR de demostración, con logs sin secretos. Después incorporar un único proveedor IA real y medir ejecución, costo y seguridad.
