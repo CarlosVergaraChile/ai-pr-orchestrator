@@ -1,0 +1,52 @@
+name: "Encargo a agente IA"
+description: "Tarea con responsable, evidencia, límites y aceptación (no ejecuta agentes por sí sola)."
+title: "[IA] "
+labels: ["documentation"]
+body:
+  - type: dropdown
+    id: product
+    attributes:
+      label: "Producto"
+      options: ["AquaEye", "HealthEye", "NovisEye", "Seguridad de demos", "Comercialización", "Infraestructura", "Otro"]
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: "Agente sugerido"
+      options: ["Claude", "Gemini", "DeepSeek", "Perplexity", "Manus", "Grok", "ChatGPT", "Kodee", "Sin asignar"]
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: "Objetivo y entregable"
+      description: "Describir el resultado verificable, no solo la actividad."
+      placeholder: "Preparar ... y devolver ..."
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: "Contexto y fuentes"
+      description: "Referenciar URLs de repositorio, ramas y documentos SIN secretos ni datos privados."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Criterios de aceptación"
+      placeholder: "Criterios objetivos, pruebas y vínculos de evidencia."
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: "Límites de ejecución"
+      options:
+        - label: "No desplegar producción, enviar comunicaciones ni fusionar a main"
+          required: true
+        - label: "No subir claves, datos reales ni información confidencial"
+          required: true
+        - label: "Distinguir propuesto, implementado, probado, publicado y comercialmente validado"
+          required: true
