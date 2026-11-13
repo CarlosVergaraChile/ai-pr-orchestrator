@@ -1,0 +1,40 @@
+name: Issue Router (manual dry run)
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Approved GitHub Issue number (agent-approved + one agent:* label)"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+  issues: read
+
+concurrency:
+  group: issue-router-${{ github.event.inputs.issue_number }}
+  cancel-in-progress: false
+
+jobs:
+  validate-and-package:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit tests (no API keys)
+        run: python -m unittest discover -s tests -p 'test_issue_router.py' -v
+      - name: Verify issue and prepare metadata-only work order
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+          OUTPUT_FILE: work-order.json
+        run: python -m scripts.issue_router
+      - name: Upload work order (metadata only, no Issue body)
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-work-order
+          path: work-order.json
+          retention-days: 2
+          if-no-files-found: error
